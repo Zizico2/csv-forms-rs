@@ -1,0 +1,22 @@
+<style>
+  @media print {
+    div.page-break {
+      page-break-after: always;
+    }
+    header {
+      display: none;
+    }
+    footer {
+      display: none;
+    }
+  }
+</style>
+{% for x in range(start=1, end=columns) %}
+  <header>start</header>
+  {% for y in range(end=rows) %}
+    {{ table[0][y] }}
+    {{ table[x][y] }}
+  {% endfor %}
+  <footer>End</footer>
+  <div class="page-break"></div>
+{% endfor %}
