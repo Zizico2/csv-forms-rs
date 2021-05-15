@@ -39,7 +39,7 @@ lazy_static! {
 
 fn insert_data_into_context<T, const H: usize, const W: usize>(arr: [T; H * W]) -> Context
 where
-    T: Copy + std::fmt::Debug,
+    T: Clone + std::fmt::Debug,
     [[T; H]; W]: Default + Serialize,
 {
     let data = Array2D::<T, H, W>::from(arr);
@@ -69,7 +69,17 @@ mod tests {
     fn it_works() {
         const W: usize = 3;
         const H: usize = 3;
-        let a = Array2D::<i32, W, H>::from([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        let a = Array2D::<String, W, H>::from([
+            "Nome".into(),
+            "Idade".into(),
+            "Rendimento".into(),
+            "Manuel".into(),
+            "52".into(),
+            "1000€".into(),
+            "Pedro".into(),
+            "29".into(),
+            "900€".into(),
+        ]);
         println!("{}", a[(0, 0)]);
         println!("{}", a[(0, 1)]);
         println!("{}", a[(0, 2)]);
@@ -95,7 +105,7 @@ mod tests {
         println!("{}", a);
         */
 
-        let context = insert_data_into_context::<i32, W, H>(a.into_array());
+        let context = insert_data_into_context::<String, W, H>(a.into_array());
 
         let res = match TEMPLATES.render("form.tera", &context) {
             Ok(t) => t,

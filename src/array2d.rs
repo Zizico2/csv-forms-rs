@@ -45,13 +45,13 @@ where
     }
     pub fn into_array_of_arrays(self) -> [[T; H]; W]
     where
-        T: Copy,
+        T: Clone,
         [[T; H]; W]: Default,
     {
         let mut state: [[T; H]; W] = Default::default();
         for x in 0..W {
             for y in 0..H {
-                state[x][y] = (&self)[(x, y)];
+                state[x][y] = (&self)[(x, y)].clone();
             }
         }
         state
